@@ -3,10 +3,10 @@
 A desktop text editor built with Electron for writing and editing movie scripts.
 
 ## 🟢 Phase 1: Basic Text Editor (Current Focus)
-- [ ] **Project Setup**
-    - [ ] Initialize Electron project
-    - [ ] Configure basic folder structure (`main`, `renderer`, `preload`)
-    - [ ] Set up build/dev scripts (e.g., `npm start`)
+- [x] **Project Setup**
+    - [x] Initialize Electron project
+    - [x] Configure basic folder structure (`main`, `renderer`, `preload`)
+    - [x] Set up build/dev scripts (e.g., `npm start`)
 - [ ] **Core UI**
     - [ ] Create main window with a text area (Editor)
     - [ ] Implement a basic menu bar (File, Edit)
