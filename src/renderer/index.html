@@ -37,11 +37,11 @@
     <script>
         const editor = document.getElementById('editor');
         let currentFilePath = null;
+        let isDirty = false;
 
         // Menu handling logic
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', (e) => {
-                // Toggle current menu
                 const wasActive = item.classList.contains('active');
                 document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
                 if (!wasActive) item.classList.add('active');
@@ -53,16 +53,26 @@
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
         });
 
+        document.updateTitle = function() {
+            const path = currentFilePath ? pathName(currentFilePath) : 'New Script';
+            const dirtyIndicator = isDirty ? ' *' : '';
+            document.title = `${path}${dirtyIndicator} - Movie Script Editor`;
+        };
+
         async function handleNew() {
-            if (currentFilePath && editor.value.length > 0) {
+            if (isDirty) {
                 if (!confirm('Unsaved changes will be lost. Continue?')) return;
             }
             editor.value = '';
             currentFilePath = null;
-            document.title = 'New Script - Movie Script Editor';
+            isDirty = false;
+            document.updateTitle();
         }
 
         async function handleOpen() {
+            if (isDirty) {
+                if (!confirm('Unsaved changes will be lost. Continue?')) return;
+            }
             const filePath = await window.electronAPI.openFile();
             if (filePath) {
                 const content = await window.electronAPI.readFile(filePath);
@@ -72,7 +82,8 @@
                 }
                 editor.value = content;
                 currentFilePath = filePath;
-                document.title = `${pathName(filePath)} - Movie Script Editor`;
+                isDirty = false;
+                document.updateTitle();
             }
         }
 
@@ -83,6 +94,9 @@
             const result = await window.electronAPI.writeFile({ filePath: currentFilePath, content: editor.value });
             if (result && result.error) {
                 alert('Error saving file: ' + result.error);
+            } else {
+                isDirty = false;
+                document.updateTitle();
             }
         }
 
@@ -95,7 +109,8 @@
                     return;
                 }
                 currentFilePath = filePath;
-                document.title = `${pathName(filePath)} - Movie Script Editor`;
+                isDirty = false;
+                document.updateTitle();
             }
         }
 
@@ -140,6 +155,13 @@
         // Basic Undo/Redo using native textarea behavior
         document.getElementById('undo').addEventListener('click', () => document.execCommand('undo'));
         document.getElementById('redo').addEventListener('click', () => document.execCommand('redo'));
+
+        editor.addEventListener('input', () => {
+            if (!isDirty) {
+                isDirty = true;
+                document.updateTitle();
+            }
+        });
     </script>
 </body>
 </html>

@@ -15,9 +15,9 @@ A desktop text editor built with Electron for writing and editing movie scripts.
     - [x] Implement "Save File" functionality
     - [x] Implement "Save As" functionality
     - [x] Implement "New File" functionality
-- [ ] **Basic Editor Features**
-    - [ ] Handle text input and editing
-    - [ ] Basic state management (tracking if the file is "dirty"/unsaved)
+- [x] **Basic Editor Features**
+    - [x] Handle text input and editing
+    - [x] Basic state management (tracking if the file is "dirty"/unsaved)
 
 ## 🟡 Phase 2: Scripting Features (Future)
 - [ ] **Script Formatting**
