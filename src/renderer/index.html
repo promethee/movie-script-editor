@@ -4,11 +4,34 @@
     <meta charset="UTF-8">
     <title>Movie Script Editor</title>
     <style>
-        body { margin: 0; font-family: sans-serif; }
-        #editor { width: 100vw; height: 100vh; padding: 20px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-size: 16px; }
+        body { margin: 0; font-family: sans-serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+        #menu-bar { background: #f0f0f0; border-bottom: 1px solid #ccc; display: flex; padding: 2px 5px; font-size: 13px; user-select: none; }
+        .menu-item { padding: 4px 10px; cursor: default; position: relative; }
+        .menu-item:hover { background: #e0e0e0; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 100; min-width: 150px; }
+        .menu-item:hover .dropdown { display: block; }
+        .dropdown-item { padding: 6px 12px; cursor: pointer; }
+        .dropdown-item:hover { background: #0078d7; color: white; }
+        #editor { flex: 1; width: 100%; border: none; padding: 20px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-size: 16px; outline: none; resize: none; }
     </style>
 </head>
 <body>
+    <div id="menu-bar">
+        <div class="menu-item">File
+            <div class="dropdown">
+                <div class="dropdown-item" id="new-file">New</div>
+                <div class="dropdown-item" id="open-file">Open</div>
+                <div class="dropdown-item" id="save-file">Save</div>
+                <div class="dropdown-item" id="save-as-file">Save As...</div>
+            </div>
+        </div>
+        <div class="menu-item">Edit
+            <div class="dropdown">
+                <div class="dropdown-item" id="undo">Undo</div>
+                <div class="dropdown-item" id="redo">Redo</div>
+            </div>
+        </div>
+    </div>
     <textarea id="editor" placeholder="Start writing your script..."></textarea>
 </body>
 </html>
