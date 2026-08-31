@@ -103,6 +103,35 @@
             return path.split(/[\\/]/).pop();
         }
 
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                switch (e.key.toLowerCase()) {
+                    case 's':
+                        e.preventDefault();
+                        handleSave();
+                        break;
+                    case 'n':
+                        e.preventDefault();
+                        handleNew();
+                        break;
+                    case 'o':
+                        e.preventDefault();
+                        handleOpen();
+                        break;
+                    case 'z':
+                        if (e.shiftKey) {
+                            e.preventDefault();
+                            document.execCommand('redo');
+                        } else {
+                            e.preventDefault();
+                            document.execCommand('undo');
+                        }
+                        break;
+                }
+            }
+        });
+
         document.getElementById('new-file').addEventListener('click', handleNew);
         document.getElementById('open-file').addEventListener('click', handleOpen);
         document.getElementById('save-file').addEventListener('click', handleSave);
