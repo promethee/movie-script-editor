@@ -46,6 +46,7 @@ ipcMain.handle('file:read', async (event, filePath) => {
 
 ipcMain.handle('file:write', async (event, { filePath, content }) => {
   try {
+    // Destructure filePath from the argument object
     await fs.writeFile(filePath, content, 'utf8');
     return { success: true };
   } catch (error) {
