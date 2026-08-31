@@ -9,7 +9,7 @@
         .menu-item { padding: 4px 10px; cursor: default; position: relative; }
         .menu-item:hover { background: #e0e0e0; }
         .dropdown { display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 100; min-width: 150px; }
-        .menu-item:hover .dropdown { display: block; }
+        .menu-item.active .dropdown { display: block; }
         .dropdown-item { padding: 6px 12px; cursor: pointer; }
         .dropdown-item:hover { background: #0078d7; color: white; }
         #editor { flex: 1; width: 100%; border: none; padding: 20px; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-size: 16px; outline: none; resize: none; }
@@ -37,6 +37,21 @@
     <script>
         const editor = document.getElementById('editor');
         let currentFilePath = null;
+
+        // Menu handling logic
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                // Toggle current menu
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                if (!wasActive) item.classList.add('active');
+                e.stopPropagation();
+            });
+        });
+
+        window.addEventListener('click', () => {
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+        });
 
         async function handleNew() {
             if (currentFilePath && editor.value.length > 0) {
