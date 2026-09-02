@@ -2,7 +2,7 @@
 
 ## 0. Project Setup
 
-- [ ] Init Electron + Vite + React + TS template
+- [x] Init Electron + Vite + React + TS template
 - [ ] Add Tailwind CSS
 - [ ] Configure electron-builder for packaging (Mac/Win/Linux)
 - [ ] Set up preload script + IPC boundary (contextIsolation on)
