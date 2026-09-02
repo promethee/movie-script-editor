@@ -9,7 +9,7 @@
 
 ## 1. Fountain Parsing
 
-- [ ] Add `fountain-js` (or chosen lib) dependency
+- [x] Add `fountain-js` (or chosen lib) dependency
 - [ ] Verify parser output shape (tokens/elements with type + range)
 - [ ] Write thin wrapper module `src/fountain/parse.ts` around the lib
 
