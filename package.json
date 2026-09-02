@@ -4,12 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:vite": "vite",
+    "dev:electron": "tsc -p electron/tsconfig.json && cp electron/package.json dist-electron/package.json && cross-env NODE_ENV=development VITE_DEV_SERVER_URL=http://localhost:5173 electron dist-electron/main.js",
+    "dev": "concurrently -k \"npm:dev:vite\" \"wait-on tcp:5173 && npm run dev:electron\"",
+    "build:vite": "vite build",
+    "build:electron": "tsc -p electron/tsconfig.json",
+    "build": "npm run build:vite && npm run build:electron",
+    "postbuild:electron": "cpy electron/package.json dist-electron/ || copyfiles -f electron/package.json dist-electron",
+    "package": "npm run build && electron-builder"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "fountain-js": "^1.2.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
@@ -18,8 +26,16 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
+    "autoprefixer": "^10.5.4",
+    "concurrently": "^10.0.5",
+    "cross-env": "^10.1.0",
+    "electron": "^44.1.1",
+    "electron-builder": "^26.15.3",
     "oxlint": "^1.79.0",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "wait-on": "^9.1.0"
   }
 }
