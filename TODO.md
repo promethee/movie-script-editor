@@ -21,11 +21,13 @@
 
 ## 3. File Handling
 
+- [x] New file (blank .fountain buffer, with unsaved-changes confirm guard)
 - [x] Open file (native dialog, IPC)
 - [x] Save / Save As (IPC)
 - [x] Track dirty state (unsaved changes indicator)
-- [x] Native menu (File > Open/Save/Save As) + keyboard shortcuts, properly cleaned up on unmount
-- [ ] New file action
+- [x] Native menu (File > New/Open/Save/Save As) + keyboard shortcuts, listeners cleaned up correctly
+- [x] Restore last opened file on launch (via remembered path + IPC re-read)
+- [x] Restore unsaved draft content on launch (persisted separately from saved-file path, cleared once saved)
 - [ ] Handle file already-open-elsewhere / external changes
 
 ## 4. Distraction-Free Chrome

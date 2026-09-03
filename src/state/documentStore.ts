@@ -15,5 +15,19 @@ export function useDocument() {
     setIsDirty(false);
   }, []);
 
-  return { content, filePath, isDirty, updateContent, markSaved, setContent };
+  const resetDocument = useCallback(() => {
+    setContent('');
+    setFilePath(null);
+    setIsDirty(false);
+  }, []);
+
+  return {
+    content,
+    filePath,
+    isDirty,
+    updateContent,
+    markSaved,
+    setContent,
+    resetDocument,
+  };
 }

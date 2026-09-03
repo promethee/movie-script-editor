@@ -9,6 +9,11 @@ function buildMenu() {
       label: 'File',
       submenu: [
         {
+          label: 'New',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => mainWindow?.webContents.send('menu:new'),
+        },
+        {
           label: 'Open...',
           accelerator: 'CmdOrCtrl+O',
           click: () => mainWindow?.webContents.send('menu:open'),
@@ -107,4 +112,27 @@ ipcMain.handle('file:saveAs', async (_e, content: string) => {
   if (result.canceled || !result.filePath) return null;
   await fs.writeFile(result.filePath, content, 'utf-8');
   return result.filePath;
+});
+
+ipcMain.handle('file:checkUnsavedAndNew', async (_e, isDirty: boolean) => {
+  if (isDirty) {
+    const result = await dialog.showMessageBox(mainWindow!, {
+      type: 'warning',
+      buttons: ['Discard Changes', 'Cancel'],
+      defaultId: 1,
+      cancelId: 1,
+      message: 'You have unsaved changes. Start a new file anyway?',
+    });
+    if (result.response === 1) return false; // cancelled
+  }
+  return true; // proceed
+});
+
+ipcMain.handle('file:readPath', async (_e, filePath: string) => {
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    return { filePath, content };
+  } catch {
+    return null; // file moved/deleted/inaccessible
+  }
 });
