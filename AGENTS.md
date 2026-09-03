@@ -7,7 +7,7 @@ Stack: Electron + React + TypeScript + Vite + Tailwind CSS.
 
 ## Core Principles
 
-- Distraction-free = single-pane editor with live formatting, no split preview panel.
+- Distraction-free = plain textarea for writing; formatted preview is separate (tab switch by default, optional split view toggle). No live in-place decoration/styling of the textarea.
 - Simplicity for the end user: install and start writing immediately, no setup screens.
 - Rely on existing libraries (e.g. `fountain-js`) for Fountain parsing — no custom parser.
 - Files are plain `.fountain` text files on disk — no proprietary format, no DB.
@@ -38,6 +38,6 @@ Stack: Electron + React + TypeScript + Vite + Tailwind CSS.
 ## Agent Working Rules
 
 - Before adding a dependency, check if it duplicates existing functionality.
-- Never introduce a split raw/preview pane — this contradicts the distraction-free requirement.
-- When implementing formatting, prefer restyling the existing text (CSS/decoration) over re-rendering into a different DOM structure, to avoid cursor position bugs.
+- Preview is rendered independently from the editor (fountain-js HTML output) — no token-to-text-position mapping, no CodeMirror, no contenteditable decoration logic.
+- Split view is a layout toggle only, sharing the same underlying document state as tab view.
 - Update TODO.md when a task is completed or a new task is discovered.

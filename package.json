@@ -3,6 +3,22 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "dist-electron/main.js",
+  "build": {
+    "appId": "com.yourname.movie-script-editor",
+    "productName": "Movie Script Editor",
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
   "scripts": {
     "lint": "oxlint",
     "preview": "vite preview",
@@ -16,6 +32,7 @@
     "package": "npm run build && electron-builder"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
     "fountain-js": "^1.2.4",
     "react": "^19.2.8",

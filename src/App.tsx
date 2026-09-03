@@ -1,122 +1,74 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState, useEffect } from 'react';
+import { useSettings } from './hooks/useSettings';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { ThemeToggle } from './components/ThemeToggle';
+
+import { Editor } from './components/Editor';
+import { Preview } from './components/Preview';
+import { ViewToggle } from './components/ViewToggle';
+import { useDocument } from './state/documentStore';
+import { useFountainFile } from './hooks/useFountainFile';
+
+type ViewMode = 'write' | 'preview' | 'split';
+
+export default function App() {
+  const { content, filePath, isDirty, updateContent, markSaved, setContent } =
+    useDocument();
+  const { openFile, saveFile, saveFileAs } = useFountainFile({
+    content,
+    filePath,
+    setContent,
+    markSaved,
+  });
+  const { theme, lastView, setTheme, setLastView } = useSettings();
+
+  const setMode = (m: ViewMode) => {
+    setModeState(m);
+    setLastView(m);
+  };
+  const [mode, setModeState] = useState<ViewMode>(lastView);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+
+  useEffect(() => {
+    window.api.onMenuOpen(openFile);
+    window.api.onMenuSave(saveFile);
+    window.api.onMenuSaveAs(saveFileAs);
+
+    return () => {
+      window.api.removeMenuListeners();
+    };
+  }, [openFile, saveFile, saveFileAs]);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="h-screen w-screen flex flex-col bg-chrome">
+      <div className="flex justify-between items-center px-4 h-11 border-b border-black/30 text-xs text-neutral-400">
+        <ViewToggle mode={mode} onChange={setMode} />
+        <div className="flex items-center gap-3">
+          <ThemeToggle
+            theme={theme}
+            onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          />
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <span>
+          {filePath ? filePath.split(/[\\/]/).pop() : 'Untitled'}
+          {isDirty ? ' •' : ''}
+        </span>
+      </div>
+      <div className="flex-1 flex overflow-hidden bg-neutral-800">
+        {(mode === 'write' || mode === 'split') && (
+          <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
+            <Editor content={content} onChange={updateContent} />
+          </div>
+        )}
+        {(mode === 'preview' || mode === 'split') && (
+          <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
+            <Preview content={content} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
-
-export default App

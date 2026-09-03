@@ -1,0 +1,44 @@
+.screenplay {
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.screenplay h3 {
+  margin: 1.5em 0 0.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.screenplay h2 {
+  text-align: right;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 1.5em 0 0.5em;
+}
+.screenplay p {
+  margin: 0 0 1em;
+}
+.screenplay p.centered {
+  text-align: center;
+}
+.screenplay .dialogue {
+  width: 60%;
+  margin: 0 auto 1em;
+  text-align: left;
+}
+.screenplay .dialogue h4 {
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 0 0.2em;
+  font-weight: 700;
+}
+.screenplay .dialogue p.parenthetical {
+  text-align: center;
+  font-style: italic;
+  margin: 0 0 0.2em;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.screenplay .dialogue p {
+  margin: 0 0 0.2em;
+}
