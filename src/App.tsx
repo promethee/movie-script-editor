@@ -130,6 +130,10 @@ export default function App() {
     if (!isDirty) setDraft(null, false);
   }, [isDirty]);
 
+  useEffect(() => {
+    if (filePath) setLastFilePath(filePath);
+  }, [filePath]);
+
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
