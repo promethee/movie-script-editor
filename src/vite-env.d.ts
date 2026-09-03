@@ -7,5 +7,7 @@ interface Window {
     onMenuOpen: (cb: () => void) => void;
     onMenuSave: (cb: () => void) => void;
     onMenuSaveAs: (cb: () => void) => void;
+
+    removeMenuListeners: () => void;
   };
 }

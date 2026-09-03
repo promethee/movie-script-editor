@@ -49,7 +49,7 @@ function buildMenu() {
 let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     show: false, // don't show until ready
@@ -61,7 +61,7 @@ function createWindow() {
   });
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.show();
+    mainWindow?.show();
   });
 
   if (process.env.VITE_DEV_SERVER_URL) {
