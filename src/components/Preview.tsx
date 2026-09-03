@@ -3,9 +3,10 @@ import { parseFountain } from '../fountain/parse';
 
 interface PreviewProps {
   content: string;
+  fontSize: number;
 }
 
-export function Preview({ content }: PreviewProps) {
+export function Preview({ content, fontSize }: PreviewProps) {
   const [html, setHtml] = useState('');
 
   useEffect(() => {
@@ -20,6 +21,7 @@ export function Preview({ content }: PreviewProps) {
     <div className="w-full h-full overflow-y-auto bg-neutral-800 flex justify-center">
       <div
         className="screenplay w-full max-w-[680px] bg-[var(--page)] text-[var(--ink)] px-14 py-16 my-8 rounded-sm shadow-sm"
+        style={{ fontSize: `${fontSize}px` }}
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>

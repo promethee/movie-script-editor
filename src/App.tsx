@@ -6,6 +6,7 @@ import { ThemeToggle } from './components/ThemeToggle';
 import { useDocument } from './state/documentStore';
 import { useFountainFile } from './hooks/useFountainFile';
 import { useSettings } from './hooks/useSettings';
+import { FontSizeControl } from './components/FontSizeControl';
 
 type ViewMode = 'write' | 'preview' | 'split';
 
@@ -36,6 +37,8 @@ export default function App() {
     draftContent,
     draftIsDirty,
     setDraft,
+    fontSize,
+    setFontSize,
   } = useSettings();
   const [mode, setModeState] = useState<ViewMode>(lastView);
 
@@ -141,12 +144,17 @@ export default function App() {
             theme={theme}
             onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           />
+          <FontSizeControl fontSize={fontSize} onChange={setFontSize} />
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden">
         {(mode === 'write' || mode === 'split') && (
           <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
-            <Editor content={content} onChange={updateContent} />
+            <Editor
+              content={content}
+              onChange={updateContent}
+              fontSize={fontSize}
+            />{' '}
           </div>
         )}
         {(mode === 'preview' || mode === 'split') && (
@@ -156,7 +164,7 @@ export default function App() {
                 ? 'w-1/2 h-full border-l border-neutral-800'
                 : 'w-full h-full'
             }>
-            <Preview content={content} />
+            <Preview content={content} fontSize={fontSize} />{' '}
           </div>
         )}
       </div>

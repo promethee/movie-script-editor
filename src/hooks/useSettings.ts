@@ -9,6 +9,7 @@ interface Settings {
   lastFilePath: string | null;
   draftContent: string | null; // unsaved content snapshot
   draftIsDirty: boolean;
+  fontSize: number;
 }
 
 const KEY = 'fountain-editor-settings';
@@ -18,6 +19,7 @@ const DEFAULTS: Settings = {
   lastFilePath: null,
   draftContent: null,
   draftIsDirty: false,
+  fontSize: 13,
 };
 
 function loadSettings(): Settings {
@@ -46,6 +48,12 @@ export function useSettings() {
   const setDraft = (draftContent: string | null, draftIsDirty: boolean) =>
     setSettings((s) => ({ ...s, draftContent, draftIsDirty }));
 
+  const setFontSize = (fontSize: number) =>
+    setSettings((s) => ({
+      ...s,
+      fontSize: Math.min(24, Math.max(10, fontSize)),
+    })); // clamp 10–24px
+
   return {
     theme: settings.theme,
     lastView: settings.lastView,
@@ -56,5 +64,7 @@ export function useSettings() {
     setLastView,
     setLastFilePath,
     setDraft,
+    fontSize: settings.fontSize,
+    setFontSize,
   };
 }

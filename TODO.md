@@ -34,9 +34,9 @@
 
 - [x] Minimal window, full-window editor, generous margins
 - [x] Light/dark theme toggle
-- [x] Persist settings (theme, last view mode) via localStorage
+- [x] Persist settings (theme, last view mode, font size) via localStorage
 - [x] Hide window until ready-to-show (avoid blank-window flash)
-- [ ] Font size setting
+- [x] Font size setting (adjustable, clamped 10–24px, persisted)
 - [ ] Focus mode / hide menu bar toggle
 
 ## 5. Packaging & Onboarding
