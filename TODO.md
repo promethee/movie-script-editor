@@ -53,3 +53,12 @@
 - [ ] Autosave
 - [ ] Scene navigator sidebar (optional, toggle-only — must not break distraction-free default)
 - [ ] Keyboard shortcuts cheat sheet
+
+## 7. Testing
+
+- [x] Vitest + Testing Library setup (jsdom environment)
+- [x] Unit tests: parseFountain (title extraction, scene heading/transition HTML, empty input)
+- [x] Unit tests: useDocument (dirty state, markSaved, resetDocument)
+- [x] Unit tests: useSettings (defaults, persistence, fontSize clamping)
+- [ ] Unit tests: useFountainFile (mock window.api, verify open/save/saveAs calls)
+- [ ] E2E tests (Playwright + Electron)

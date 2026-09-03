@@ -12,4 +12,9 @@ export default defineConfig({
     port: 5173,
     strictPort: true, // fail fast instead of silently picking another port (breaks wait-on)
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/test/setup.ts',
+  },
 });
