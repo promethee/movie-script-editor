@@ -61,4 +61,6 @@
 - [x] Unit tests: useDocument (dirty state, markSaved, resetDocument)
 - [x] Unit tests: useSettings (defaults, persistence, fontSize clamping)
 - [ ] Unit tests: useFountainFile (mock window.api, verify open/save/saveAs calls)
-- [ ] E2E tests (Playwright + Electron)
+- [x] E2E setup (Playwright + Electron, isolated user-data-dir per test)
+- [x] E2E: blank editor on launch, draft persistence across restart, preview rendering, theme persistence
+- [ ] E2E: native menu actions (New/Open/Save/Save As) — needs IPC-driven trigger since Playwright can't click OS-native menus
