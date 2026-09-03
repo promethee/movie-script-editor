@@ -41,10 +41,10 @@
 
 ## 5. Packaging & Onboarding
 
-- [ ] electron-builder config (blocked — output dir conflict with Vite's dist/)
+- [x] electron-builder config (output separated to release/, main/preload compiled as .cjs to avoid ESM/CJS conflicts)
+- [x] Windows installer builds and launches successfully
 - [ ] App icon + branding
-- [ ] First-run experience (already effectively true — opens straight to blank editor)
-- [ ] Installers for target OS(es)
+- [ ] macOS/Linux packaging targets (untested)
 - [ ] Basic README with install instructions
 
 ## 6. Polish / Post-MVP (backlog, not blocking)

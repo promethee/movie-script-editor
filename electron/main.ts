@@ -59,7 +59,7 @@ function createWindow() {
     height: 800,
     show: false, // don't show until ready
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
     },
