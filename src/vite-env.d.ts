@@ -18,6 +18,11 @@ interface Window {
       scriptHtml: string;
       suggestedName: string;
     }) => Promise<string | null>;
+    onBeforeQuit: (cb: () => void) => void;
+    confirmQuit: () => void;
+    checkUnsavedAndQuit: (isDirty: boolean) => Promise<boolean>;
+
     removeMenuListeners: () => void;
+    removeBeforeQuitListener: () => void;
   };
 }

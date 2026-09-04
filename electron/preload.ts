@@ -17,10 +17,18 @@ contextBridge.exposeInMainWorld('api', {
     scriptHtml: string;
     suggestedName: string;
   }) => ipcRenderer.invoke('file:exportPdf', args),
+  onBeforeQuit: (cb: () => void) => ipcRenderer.on('app:before-quit', cb),
+  confirmQuit: () => ipcRenderer.send('app:quit-confirmed'),
+  checkUnsavedAndQuit: (isDirty: boolean) =>
+    ipcRenderer.invoke('file:checkUnsavedAndQuit', isDirty),
+
   removeMenuListeners: () => {
     ipcRenderer.removeAllListeners('menu:open');
     ipcRenderer.removeAllListeners('menu:save');
     ipcRenderer.removeAllListeners('menu:save-as');
     ipcRenderer.removeAllListeners('menu:new');
+  },
+  removeBeforeQuitListener: () => {
+    ipcRenderer.removeAllListeners('app:before-quit');
   },
 });

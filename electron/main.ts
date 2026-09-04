@@ -70,6 +70,19 @@ function createWindow() {
     Menu.setApplicationMenu(null);
   }
 
+  let isQuittingConfirmed = false;
+
+  mainWindow.on('close', (e) => {
+    if (isQuittingConfirmed) return;
+    e.preventDefault();
+    mainWindow?.webContents.send('app:before-quit');
+  });
+
+  ipcMain.on('app:quit-confirmed', () => {
+    isQuittingConfirmed = true;
+    mainWindow?.close();
+  });
+
   mainWindow.once('ready-to-show', () => {
     mainWindow?.show();
   });
@@ -197,3 +210,17 @@ ipcMain.handle(
     return result.filePath;
   },
 );
+
+ipcMain.handle('file:checkUnsavedAndQuit', async (_e, isDirty: boolean) => {
+  if (isDirty) {
+    const result = await dialog.showMessageBox(mainWindow!, {
+      type: 'warning',
+      buttons: ['Quit Without Saving', 'Cancel'],
+      defaultId: 1,
+      cancelId: 1,
+      message: 'You have unsaved changes. Quit anyway?',
+    });
+    if (result.response === 1) return false;
+  }
+  return true;
+});

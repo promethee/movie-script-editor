@@ -213,6 +213,15 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [content, filePath, isDirty, autosaveEnabled, markSaved]);
 
+  useEffect(() => {
+    const handler = async () => {
+      const proceed = await window.api.checkUnsavedAndQuit(isDirty);
+      if (proceed) window.api.confirmQuit();
+    };
+    window.api.onBeforeQuit(handler);
+    return () => window.api.removeBeforeQuitListener();
+  }, [isDirty]);
+
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
