@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Editor } from './components/Editor';
 import { Preview } from './components/Preview';
 import { ViewToggle } from './components/ViewToggle';
@@ -11,6 +11,7 @@ import { AppMenu } from './components/AppMenu';
 import { parseFountain } from './fountain/parse';
 import { computeStats, type ScriptStats } from './fountain/stats';
 import { StatsBar } from './components/StatsBar';
+import { SearchBar } from './components/SearchBar';
 
 type ViewMode = 'write' | 'preview' | 'split';
 
@@ -56,6 +57,9 @@ export default function App() {
     estimatedPages: 0,
     estimatedMinutes: 0,
   });
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   // --- derived actions ---
   const setMode = (m: ViewMode) => {
@@ -153,6 +157,10 @@ export default function App() {
       if (cmdOrCtrl && e.shiftKey && e.key === 'S') {
         e.preventDefault();
         saveFileAs();
+      }
+      if (cmdOrCtrl && e.key === 'f') {
+        e.preventDefault();
+        setSearchOpen(true);
       }
       if (cmdOrCtrl && e.key === 'Tab') {
         e.preventDefault();
@@ -302,6 +310,24 @@ export default function App() {
       <div className="flex-1 flex overflow-hidden">
         {(mode === 'write' || mode === 'split') && (
           <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
+            {(mode === 'write' || mode === 'split') && (
+              <div
+                className={`relative ${mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}`}>
+                <Editor
+                  ref={textareaRef}
+                  content={content}
+                  onChange={updateContent}
+                  fontSize={fontSize}
+                />
+                {searchOpen && (
+                  <SearchBar
+                    textareaRef={textareaRef}
+                    content={content}
+                    onClose={() => setSearchOpen(false)}
+                  />
+                )}
+              </div>
+            )}
             <Editor
               content={content}
               onChange={updateContent}

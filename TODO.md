@@ -54,8 +54,9 @@
 
 - [x] Export to PDF (title page from Fountain metadata, suggested filename from script title, standard screenplay margins/formatting)
 - [x] Autosave — opt-in checkbox in toolbar, disabled until file is saved once, debounced 2.5s writes, resets off on New/Open, "Autosave!" flash confirmation
-- [x] Screenplay stats — word count, scene count, estimated pages/runtime, shown in a dedicated row below the toolbar (55-lines-per-page heuristic, debounced)
-- [ ] Scene navigator sidebar (optional, toggle-only — must not break distraction-free default)
+- [x] Screenplay stats — word count, scene count, estimated pages/runtime, shown in a dedicated row below the toolbar
+- [x] Find/search in Write view (Ctrl+F) — substring match, next/prev navigation, live match count, scoped to editor only (not Preview)
+- [ ] Scene navigator sidebar — descoped in favor of search
 
 ## 7. Testing
 
