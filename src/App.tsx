@@ -7,6 +7,7 @@ import { useDocument } from './state/documentStore';
 import { useFountainFile } from './hooks/useFountainFile';
 import { useSettings } from './hooks/useSettings';
 import { FontSizeControl } from './components/FontSizeControl';
+import { AppMenu } from './components/AppMenu';
 
 type ViewMode = 'write' | 'preview' | 'split';
 
@@ -56,6 +57,26 @@ export default function App() {
       setDraft(null, false);
     }
   }, [isDirty, resetDocument, setLastFilePath, setDraft]);
+
+  const menuGroups = [
+    {
+      label: 'File',
+      items: [
+        { label: 'New', onClick: newFile, shortcut: 'Ctrl+N' },
+        { label: 'Open...', onClick: openFile, shortcut: 'Ctrl+O' },
+        { label: 'Save', onClick: saveFile, shortcut: 'Ctrl+S' },
+        { label: 'Save As...', onClick: saveFileAs, shortcut: 'Ctrl+Shift+S' },
+      ],
+    },
+    {
+      label: 'View',
+      items: [
+        { label: 'Write', onClick: () => setMode('write') },
+        { label: 'Preview', onClick: () => setMode('preview') },
+        { label: 'Split', onClick: () => setMode('split') },
+      ],
+    },
+  ];
 
   // --- effects ---
   useEffect(() => {
@@ -137,6 +158,9 @@ export default function App() {
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
+      <div className="flex items-center px-2 h-8 border-b border-black/30">
+        <AppMenu groups={menuGroups} />
+      </div>
       <div className="flex justify-between items-center px-4 h-11 border-b border-black/30 text-xs text-neutral-400">
         <ViewToggle mode={mode} onChange={setMode} />
         <div className="flex items-center gap-3">

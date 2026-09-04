@@ -58,6 +58,7 @@ function createWindow() {
     width: 1000,
     height: 800,
     show: false, // don't show until ready
+    autoHideMenuBar: process.platform !== 'darwin', // hide by default on Win/Linux
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
@@ -78,7 +79,9 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-  buildMenu();
+  if (process.platform === 'darwin') {
+    buildMenu(); // keep native menu on macOS only
+  }
 });
 
 app.on('window-all-closed', () => {
