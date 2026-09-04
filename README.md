@@ -62,6 +62,24 @@ npm run test:e2e   # end-to-end tests (Playwright + Electron)
 
 Unit tests cover Fountain parsing, document/settings state, and persistence logic. E2E tests cover core app flows: launch, draft persistence, preview rendering, and theme persistence.
 
+## Test Coverage
+
+**Unit tests** (`npm run test`) cover:
+
+- Fountain parsing (title extraction, HTML rendering, title-page separation)
+- Document state (dirty tracking, save/reset logic)
+- Settings persistence (theme, font size, autosave, clamping)
+
+**E2E tests** (`npm run test:e2e`, run manually — not yet in CI) cover:
+
+- App launch, draft persistence across restarts, preview rendering, theme persistence
+
+**Not covered:**
+
+- Native menu actions and OS-level dialogs (Playwright can't drive native menus directly)
+- PDF export output correctness (visual/manual verification only)
+- macOS and Linux builds (developed and tested on Windows; packaging is cross-platform via electron-builder but unverified on other OSes)
+
 ## Development Notes
 
 This project was built collaboratively with [Claude](https://claude.com), using an agent-assisted development workflow — the working `AGENTS.md` in this repo captures the conventions and guardrails used throughout the build (architecture decisions, coding conventions, and non-goals for the project).
