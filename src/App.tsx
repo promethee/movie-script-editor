@@ -61,6 +61,22 @@ export default function App() {
   const menuGroups = [
     {
       label: 'File',
+      icon: (
+        <svg viewBox="0 0 20 20" fill="none" className="w-3.5 h-3.5">
+          <path
+            d="M5 2.5h6.5L15 6v11a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-14a.5.5 0 0 1 .5-.5Z"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M11.5 2.5V6H15"
+            stroke="currentColor"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
       items: [
         { label: 'New', onClick: newFile, shortcut: 'Ctrl+N' },
         { label: 'Open...', onClick: openFile, shortcut: 'Ctrl+O' },

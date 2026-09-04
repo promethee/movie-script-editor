@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ReactNode } from 'react';
 
 interface MenuItem {
   label: string;
@@ -8,6 +8,7 @@ interface MenuItem {
 
 interface MenuGroup {
   label: string;
+  icon?: ReactNode;
   items: MenuItem[];
 }
 
@@ -36,11 +37,12 @@ export function AppMenu({ groups }: AppMenuProps) {
         <div key={group.label} className="relative">
           <button
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className={`px-2.5 py-1 rounded transition-colors ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded transition-colors ${
               openIndex === i
                 ? 'bg-white/10 text-neutral-100'
                 : 'hover:bg-white/5 hover:text-neutral-200'
             }`}>
+            {group.icon}
             {group.label}
           </button>
           {openIndex === i && (

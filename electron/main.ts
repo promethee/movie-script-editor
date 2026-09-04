@@ -58,13 +58,17 @@ function createWindow() {
     width: 1000,
     height: 800,
     show: false, // don't show until ready
-    autoHideMenuBar: process.platform !== 'darwin', // hide by default on Win/Linux
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
       nodeIntegration: false,
     },
   });
+
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(null);
+  }
 
   mainWindow.once('ready-to-show', () => {
     mainWindow?.show();
