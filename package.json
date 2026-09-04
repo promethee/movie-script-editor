@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist-electron/main.cjs",
   "build": {
-    "appId": "com.yourname.movie-script-editor",
+    "appId": "com.promethee.movie-script-editor",
     "productName": "Movie Script Editor",
     "files": [
       "dist/**/*",
@@ -17,6 +17,14 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Office"
     }
   },
   "scripts": {

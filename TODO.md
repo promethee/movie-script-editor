@@ -47,9 +47,10 @@
 
 - [x] electron-builder config (output separated to release/, main/preload compiled as .cjs to avoid ESM/CJS conflicts)
 - [x] Windows installer builds and launches successfully
+- [x] macOS (dmg) and Linux (AppImage) packaging targets added (untested on those OSes — built via CI, not manually verified)
+- [x] GitHub Actions release pipeline (tag-triggered, builds Win/macOS/Linux, runs unit tests, publishes installers to GitHub Releases)
+- [x] Basic README with install instructions, unsigned-build notice, and test coverage transparency section
 - [ ] App icon + branding
-- [ ] macOS/Linux packaging targets (untested)
-- [ ] Basic README with install instructions
 
 ## 6. Polish / Post-MVP (backlog, not blocking)
 
