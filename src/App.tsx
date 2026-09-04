@@ -236,6 +236,21 @@ export default function App() {
     return () => clearTimeout(timeout);
   }, [content]);
 
+  useEffect(() => {
+    const handler = async () => {
+      const shouldReload = await window.api.confirmExternalReload();
+      if (shouldReload && filePath) {
+        const result = await window.api.readPath(filePath);
+        if (result) {
+          setContent(result.content);
+          markSaved(result.filePath);
+        }
+      }
+    };
+    window.api.onExternalChange(handler);
+    return () => window.api.removeExternalChangeListener();
+  }, [filePath, setContent, markSaved]);
+
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">

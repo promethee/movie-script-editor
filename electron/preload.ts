@@ -21,6 +21,11 @@ contextBridge.exposeInMainWorld('api', {
   confirmQuit: () => ipcRenderer.send('app:quit-confirmed'),
   checkUnsavedAndQuit: (isDirty: boolean) =>
     ipcRenderer.invoke('file:checkUnsavedAndQuit', isDirty),
+  onExternalChange: (cb: () => void) =>
+    ipcRenderer.on('file:externalChange', cb),
+  removeExternalChangeListener: () =>
+    ipcRenderer.removeAllListeners('file:externalChange'),
+  confirmExternalReload: () => ipcRenderer.invoke('file:confirmExternalReload'),
 
   removeMenuListeners: () => {
     ipcRenderer.removeAllListeners('menu:open');

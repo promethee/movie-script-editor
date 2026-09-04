@@ -29,7 +29,7 @@
 - [x] Restore last opened file on launch (via remembered path + IPC re-read)
 - [x] Restore unsaved draft content on launch (persisted separately from saved-file path, cleared once saved)
 - [x] Confirm before quit if there are unsaved changes (native dialog, intercepts window close)
-- [ ] Handle file already-open-elsewhere / external changes
+- [x] Handle file already-open-elsewhere / external changes (fs.watch, own-write suppression, reload/keep confirm dialog)
 
 ## 4. Distraction-Free Chrome
 

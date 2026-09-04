@@ -22,6 +22,10 @@ interface Window {
     confirmQuit: () => void;
     checkUnsavedAndQuit: (isDirty: boolean) => Promise<boolean>;
 
+    onExternalChange: (cb: () => void) => void;
+    removeExternalChangeListener: () => void;
+    confirmExternalReload: () => Promise<boolean>;
+
     removeMenuListeners: () => void;
     removeBeforeQuitListener: () => void;
   };

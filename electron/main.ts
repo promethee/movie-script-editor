@@ -2,6 +2,30 @@ import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import path from 'path';
 import fs from 'fs/promises';
 import { Menu } from 'electron';
+import { watch, FSWatcher } from 'fs';
+
+let currentWatcher: FSWatcher | null = null;
+let suppressWatch = false;
+
+function watchFile(filePath: string) {
+  currentWatcher?.close();
+  currentWatcher = watch(filePath, () => {
+    if (suppressWatch) return;
+    mainWindow?.webContents.send('file:externalChange');
+  });
+}
+
+function stopWatching() {
+  currentWatcher?.close();
+  currentWatcher = null;
+}
+
+function suppressWatchBriefly() {
+  suppressWatch = true;
+  setTimeout(() => {
+    suppressWatch = false;
+  }, 500); // ignore our own write's fs event
+}
 
 function buildMenu() {
   const template: Electron.MenuItemConstructorOptions[] = [
@@ -114,13 +138,16 @@ ipcMain.handle('file:open', async () => {
   if (result.canceled || !result.filePaths[0]) return null;
   const filePath = result.filePaths[0];
   const content = await fs.readFile(filePath, 'utf-8');
+  watchFile(filePath);
   return { filePath, content };
 });
 
 ipcMain.handle(
   'file:save',
   async (_e, { filePath, content }: { filePath: string; content: string }) => {
+    suppressWatchBriefly();
     await fs.writeFile(filePath, content, 'utf-8');
+    watchFile(filePath); // ensures watching even if this was the first save of a new file
     return true;
   },
 );
@@ -130,7 +157,9 @@ ipcMain.handle('file:saveAs', async (_e, content: string) => {
     filters: [{ name: 'Fountain', extensions: ['fountain'] }],
   });
   if (result.canceled || !result.filePath) return null;
+  suppressWatchBriefly();
   await fs.writeFile(result.filePath, content, 'utf-8');
+  watchFile(result.filePath);
   return result.filePath;
 });
 
@@ -143,17 +172,19 @@ ipcMain.handle('file:checkUnsavedAndNew', async (_e, isDirty: boolean) => {
       cancelId: 1,
       message: 'You have unsaved changes. Start a new file anyway?',
     });
-    if (result.response === 1) return false; // cancelled
+    if (result.response === 1) return false;
   }
-  return true; // proceed
+  stopWatching();
+  return true;
 });
 
 ipcMain.handle('file:readPath', async (_e, filePath: string) => {
   try {
     const content = await fs.readFile(filePath, 'utf-8');
+    watchFile(filePath);
     return { filePath, content };
   } catch {
-    return null; // file moved/deleted/inaccessible
+    return null;
   }
 });
 
@@ -223,4 +254,16 @@ ipcMain.handle('file:checkUnsavedAndQuit', async (_e, isDirty: boolean) => {
     if (result.response === 1) return false;
   }
   return true;
+});
+
+ipcMain.handle('file:confirmExternalReload', async () => {
+  const result = await dialog.showMessageBox(mainWindow!, {
+    type: 'warning',
+    buttons: ['Reload from Disk', 'Keep My Version'],
+    defaultId: 1,
+    cancelId: 1,
+    message:
+      'This file was changed outside the editor. Reload it and lose your current changes?',
+  });
+  return result.response === 0; // true = reload
 });
