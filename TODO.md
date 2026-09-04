@@ -37,6 +37,8 @@
 - [x] Persist settings (theme, last view mode, font size) via localStorage
 - [x] Hide window until ready-to-show (avoid blank-window flash)
 - [x] Font size setting (adjustable, clamped 10–24px, persisted)
+- [x] In-app File menu replacing native OS menu bar (Win/Linux), native menu kept on macOS
+- [x] Ctrl+Tab shortcut to cycle Write/Preview/Split, with on-screen hint
 - [ ] Focus mode / hide menu bar toggle
 
 ## 5. Packaging & Onboarding

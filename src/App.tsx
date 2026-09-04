@@ -121,6 +121,12 @@ export default function App() {
         e.preventDefault();
         saveFileAs();
       }
+      if (cmdOrCtrl && e.key === 'Tab') {
+        e.preventDefault();
+        const order: ViewMode[] = ['write', 'preview', 'split'];
+        const next = order[(order.indexOf(mode) + 1) % order.length];
+        setMode(next);
+      }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -171,8 +177,12 @@ export default function App() {
           <AppMenu groups={menuGroups} />
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex items-center justify-center gap-2">
+          {' '}
           <ViewToggle mode={mode} onChange={setMode} />
+          <span className="text-[10px] text-neutral-400 leading-none">
+            Ctrl+Tab
+          </span>
         </div>
 
         <div className="flex items-center justify-end gap-3">
