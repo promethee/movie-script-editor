@@ -68,14 +68,6 @@ export default function App() {
         { label: 'Save As...', onClick: saveFileAs, shortcut: 'Ctrl+Shift+S' },
       ],
     },
-    {
-      label: 'View',
-      items: [
-        { label: 'Write', onClick: () => setMode('write') },
-        { label: 'Preview', onClick: () => setMode('preview') },
-        { label: 'Split', onClick: () => setMode('split') },
-      ],
-    },
   ];
 
   // --- effects ---
@@ -158,21 +150,25 @@ export default function App() {
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
-      <div className="flex items-center px-2 h-8 border-b border-black/30">
-        <AppMenu groups={menuGroups} />
-      </div>
-      <div className="flex justify-between items-center px-4 h-11 border-b border-black/30 text-xs text-neutral-400">
-        <ViewToggle mode={mode} onChange={setMode} />
-        <div className="flex items-center gap-3">
+      <div className="grid grid-cols-3 items-center px-3 h-11 border-b border-black/30 text-xs text-neutral-400">
+        <div className="flex items-center">
+          <AppMenu groups={menuGroups} />
+        </div>
+
+        <div className="flex justify-center">
+          <ViewToggle mode={mode} onChange={setMode} />
+        </div>
+
+        <div className="flex items-center justify-end gap-3">
           <span>
             {filePath ? filePath.split(/[\\/]/).pop() : 'Untitled'}
             {isDirty ? ' •' : ''}
           </span>
+          <FontSizeControl fontSize={fontSize} onChange={setFontSize} />
           <ThemeToggle
             theme={theme}
             onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           />
-          <FontSizeControl fontSize={fontSize} onChange={setFontSize} />
         </div>
       </div>
       <div className="flex-1 flex overflow-hidden">
