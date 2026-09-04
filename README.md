@@ -28,6 +28,15 @@ A distraction-free desktop screenwriting editor built around the [Fountain](http
 
 ## Getting Started
 
+### A note on installers
+
+Downloaded builds are **unsigned** (no Apple Developer or Windows code-signing certificate — not worth the cost for a portfolio project). On first launch:
+
+- **Windows**: SmartScreen may warn "Windows protected your PC" — click "More info" → "Run anyway."
+- **macOS**: Gatekeeper will block it as being from an "unidentified developer" — right-click the app → "Open" to bypass, or allow it in System Settings → Privacy & Security.
+
+This is expected and safe for a project you're building from open source.
+
 ```bash
 git clone https://github.com/<your-username>/movie-script-editor.git
 cd movie-script-editor
