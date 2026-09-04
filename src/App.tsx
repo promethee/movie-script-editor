@@ -261,88 +261,81 @@ export default function App() {
 
   // --- render ---
   return (
-    <div className="h-screen w-screen flex flex-col bg-chrome">
-      <div className="grid grid-cols-3 items-center px-3 h-11 border-b border-black/30 text-xs text-neutral-400">
-        <div className="flex items-center gap-3">
-          <AppMenu groups={menuGroups} />
-          <label
-            className={`flex items-center gap-1.5 text-xs select-none ${
-              filePath
-                ? 'text-neutral-400 cursor-pointer'
-                : 'text-neutral-700 cursor-not-allowed'
-            }`}>
-            <input
-              type="checkbox"
-              checked={autosaveEnabled}
-              disabled={!filePath}
-              onChange={(e) => setAutosaveEnabled(e.target.checked)}
-              className="accent-neutral-400 disabled:opacity-40"
+    <div className="h-screen w-screen flex flex-col bg-[var(--chrome)]">
+      <div className="flex flex-col border-b border-[var(--border)]">
+        <div className="grid grid-cols-3 items-center px-3 h-11 text-xs text-[var(--text-muted)]">
+          <div className="flex items-center gap-3">
+            <AppMenu groups={menuGroups} />
+            <label
+              className={`flex items-center gap-1.5 text-xs select-none ${
+                filePath
+                  ? 'text-[var(--text-muted)] cursor-pointer'
+                  : 'text-[var(--text-faint)] cursor-not-allowed'
+              }`}>
+              <input
+                type="checkbox"
+                checked={autosaveEnabled}
+                disabled={!filePath}
+                onChange={(e) => setAutosaveEnabled(e.target.checked)}
+                className="accent-neutral-400 disabled:opacity-40"
+              />
+              {justAutosaved ? 'Autosave!' : 'Autosave'}
+            </label>
+          </div>
+
+          <div className="flex items-center justify-center gap-2">
+            <ViewToggle mode={mode} onChange={setMode} />
+            <span className="text-[10px] text-[var(--text-faint)] leading-none">
+              Ctrl+Tab
+            </span>
+          </div>
+
+          <div className="flex items-center justify-end gap-3">
+            <span>
+              {filePath ? filePath.split(/[\\/]/).pop() : 'Untitled'}
+              {isDirty ? ' •' : ''}
+            </span>
+            <FontSizeControl fontSize={fontSize} onChange={setFontSize} />
+            <ThemeToggle
+              theme={theme}
+              onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             />
-            {justAutosaved ? 'Autosave!' : 'Autosave'}
-          </label>
+          </div>
         </div>
 
-        <div className="flex items-center justify-center gap-2">
-          {' '}
-          <ViewToggle mode={mode} onChange={setMode} />
-          <span className="text-[10px] text-neutral-400 leading-none">
-            Ctrl+Tab
-          </span>
+        <div className="flex justify-center px-3 py-1 border-t border-[var(--border)]">
+          <StatsBar stats={stats} />
         </div>
-
-        <div className="flex items-center justify-end gap-3">
-          <span>
-            {filePath ? filePath.split(/[\\/]/).pop() : 'Untitled'}
-            {isDirty ? ' •' : ''}
-          </span>
-          <FontSizeControl fontSize={fontSize} onChange={setFontSize} />
-          <ThemeToggle
-            theme={theme}
-            onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          />
-        </div>
-      </div>
-
-      <div className="flex justify-center px-3 py-1 border-t border-black/20">
-        <StatsBar stats={stats} />
       </div>
 
       <div className="flex-1 flex overflow-hidden">
         {(mode === 'write' || mode === 'split') && (
-          <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
-            {(mode === 'write' || mode === 'split') && (
-              <div
-                className={`relative ${mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}`}>
-                <Editor
-                  ref={textareaRef}
-                  content={content}
-                  onChange={updateContent}
-                  fontSize={fontSize}
-                />
-                {searchOpen && (
-                  <SearchBar
-                    textareaRef={textareaRef}
-                    content={content}
-                    onClose={() => setSearchOpen(false)}
-                  />
-                )}
-              </div>
-            )}
+          <div
+            className={`relative ${mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}`}>
             <Editor
+              ref={textareaRef}
               content={content}
               onChange={updateContent}
               fontSize={fontSize}
-            />{' '}
+            />
+            {searchOpen && (
+              <SearchBar
+                textareaRef={textareaRef}
+                content={content}
+                onClose={() => setSearchOpen(false)}
+              />
+            )}
           </div>
         )}
+
         {(mode === 'preview' || mode === 'split') && (
           <div
             className={
               mode === 'split'
-                ? 'w-1/2 h-full border-l border-neutral-800'
+                ? 'w-1/2 h-full border-l border-[var(--border)]'
                 : 'w-full h-full'
             }>
-            <Preview content={content} fontSize={fontSize} />{' '}
+            <Preview content={content} fontSize={fontSize} />
           </div>
         )}
       </div>

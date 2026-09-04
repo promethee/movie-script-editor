@@ -18,9 +18,10 @@ export function Preview({ content, fontSize }: PreviewProps) {
   }, [content]);
 
   return (
-    <div className="w-full h-full overflow-y-auto bg-neutral-800 flex justify-center">
+    <div className="w-full h-full bg-[var(--surface)] flex justify-center overflow-hidden py-8">
       <div
-        className="screenplay w-full max-w-[680px] bg-[var(--page)] text-[var(--ink)] px-14 py-16 my-8 rounded-sm shadow-sm"
+        className="screenplay w-full max-w-[680px] h-full overflow-y-auto
+               bg-[var(--page)] text-[var(--ink)] px-14 py-16 rounded-sm shadow-sm"
         style={{ fontSize: `${fontSize}px` }}
         dangerouslySetInnerHTML={{ __html: html }}
       />

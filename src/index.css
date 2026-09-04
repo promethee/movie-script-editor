@@ -3,10 +3,20 @@
 :root {
   --page: #faf9f6;
   --ink: #2b2b28;
+  --surface: #e8e8e6;
+  --chrome: #f2f2f0;
+  --border: rgba(0, 0, 0, 0.12);
+  --text-muted: #6b6b68;
+  --text-faint: #9a9a96;
 }
 .dark {
   --page: #1e1e1e;
   --ink: #e4e4e0;
+  --surface: #262626;
+  --chrome: #1c1c1e;
+  --border: rgba(255, 255, 255, 0.08);
+  --text-muted: #8a8a86;
+  --text-faint: #5c5c58;
 }
 
 html,
@@ -14,4 +24,21 @@ body,
 #root {
   height: 100%;
   margin: 0;
+}
+
+/* Thin, theme-aware scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-faint) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--text-faint);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
 }

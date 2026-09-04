@@ -40,7 +40,8 @@
 - [x] Font size setting (adjustable, clamped 10–24px, persisted)
 - [x] In-app File menu replacing native OS menu bar (Win/Linux), native menu kept on macOS
 - [x] Ctrl+Tab shortcut to cycle Write/Preview/Split, with on-screen hint
-- [ ] Focus mode / hide menu bar toggle
+- [x] Full theme-variable system (--page, --ink, --surface, --chrome, --border, --text-muted/faint) so light/dark themes are consistent across the entire UI, not just the writing page
+- [x] Theme-aware thin scrollbars
 
 ## 5. Packaging & Onboarding
 
