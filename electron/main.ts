@@ -88,6 +88,7 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
     },
+    icon: path.join(__dirname, '../build/icon.png'), // shown in taskbar while app is running
   });
 
   if (process.platform !== 'darwin') {
