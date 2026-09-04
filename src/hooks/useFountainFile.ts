@@ -5,6 +5,7 @@ interface UseFountainFileArgs {
   filePath: string | null;
   setContent: (text: string) => void;
   markSaved: (path: string) => void;
+  onOpen?: () => void; // called after a file is successfully opened
 }
 
 export function useFountainFile({
@@ -12,6 +13,7 @@ export function useFountainFile({
   filePath,
   setContent,
   markSaved,
+  onOpen,
 }: UseFountainFileArgs) {
   // Refs let the callbacks below stay stable across renders
   // while still reading the latest content/filePath when invoked.
@@ -29,7 +31,8 @@ export function useFountainFile({
     if (!result) return;
     setContent(result.content);
     markSaved(result.filePath);
-  }, [setContent, markSaved]);
+    onOpen?.();
+  }, [setContent, markSaved, onOpen]);
 
   const saveFile = useCallback(async () => {
     if (filePathRef.current) {

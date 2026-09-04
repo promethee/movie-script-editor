@@ -41,8 +41,12 @@ export default function App() {
     setDraft,
     fontSize,
     setFontSize,
+    autosaveEnabled,
+    setAutosaveEnabled,
   } = useSettings();
   const [mode, setModeState] = useState<ViewMode>(lastView);
+
+  const [justAutosaved, setJustAutosaved] = useState(false);
 
   // --- derived actions ---
   const setMode = (m: ViewMode) => {
@@ -56,8 +60,9 @@ export default function App() {
       resetDocument();
       setLastFilePath(null);
       setDraft(null, false);
+      setAutosaveEnabled(false);
     }
-  }, [isDirty, resetDocument, setLastFilePath, setDraft]);
+  }, [isDirty, resetDocument, setLastFilePath, setDraft, setAutosaveEnabled]);
 
   const exportPdf = useCallback(async () => {
     const { html, titlePageHtml, title } = parseFountain(content);
@@ -188,12 +193,47 @@ export default function App() {
     if (filePath) setLastFilePath(filePath);
   }, [filePath]);
 
+  useEffect(() => {
+    if (!autosaveEnabled || !filePath || !isDirty) return;
+    const timeout = setTimeout(async () => {
+      await window.api.saveFile(filePath, content);
+      markSaved(filePath);
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, [content, filePath, isDirty, autosaveEnabled, markSaved]);
+
+  useEffect(() => {
+    if (!autosaveEnabled || !filePath || !isDirty) return;
+    const timeout = setTimeout(async () => {
+      await window.api.saveFile(filePath, content);
+      markSaved(filePath);
+      setJustAutosaved(true);
+      setTimeout(() => setJustAutosaved(false), 1200);
+    }, 2500);
+    return () => clearTimeout(timeout);
+  }, [content, filePath, isDirty, autosaveEnabled, markSaved]);
+
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
       <div className="grid grid-cols-3 items-center px-3 h-11 border-b border-black/30 text-xs text-neutral-400">
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <AppMenu groups={menuGroups} />
+          <label
+            className={`flex items-center gap-1.5 text-xs select-none ${
+              filePath
+                ? 'text-neutral-400 cursor-pointer'
+                : 'text-neutral-700 cursor-not-allowed'
+            }`}>
+            <input
+              type="checkbox"
+              checked={autosaveEnabled}
+              disabled={!filePath}
+              onChange={(e) => setAutosaveEnabled(e.target.checked)}
+              className="accent-neutral-400 disabled:opacity-40"
+            />
+            {justAutosaved ? 'Autosave!' : 'Autosave'}
+          </label>
         </div>
 
         <div className="flex items-center justify-center gap-2">

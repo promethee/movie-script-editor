@@ -52,7 +52,7 @@
 ## 6. Polish / Post-MVP (backlog, not blocking)
 
 - [x] Export to PDF (title page from Fountain metadata, suggested filename from script title, standard screenplay margins/formatting)
-- [ ] Autosave
+- [x] Autosave — opt-in checkbox in toolbar (next to File menu), disabled until file is saved once, debounced 2.5s writes, resets off on New/Open, "Autosave!" flash confirmation on each write
 - [ ] Scene navigator sidebar (optional, toggle-only — must not break distraction-free default)
 - [ ] Keyboard shortcuts cheat sheet
 

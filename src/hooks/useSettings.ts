@@ -10,6 +10,7 @@ interface Settings {
   draftContent: string | null; // unsaved content snapshot
   draftIsDirty: boolean;
   fontSize: number;
+  autosaveEnabled: boolean;
 }
 
 const KEY = 'fountain-editor-settings';
@@ -20,6 +21,7 @@ const DEFAULTS: Settings = {
   draftContent: null,
   draftIsDirty: false,
   fontSize: 13,
+  autosaveEnabled: false,
 };
 
 function loadSettings(): Settings {
@@ -54,6 +56,9 @@ export function useSettings() {
       fontSize: Math.min(24, Math.max(10, fontSize)),
     })); // clamp 10–24px
 
+  const setAutosaveEnabled = (autosaveEnabled: boolean) =>
+    setSettings((s) => ({ ...s, autosaveEnabled }));
+
   return {
     theme: settings.theme,
     lastView: settings.lastView,
@@ -66,5 +71,7 @@ export function useSettings() {
     setDraft,
     fontSize: settings.fontSize,
     setFontSize,
+    autosaveEnabled: settings.autosaveEnabled,
+    setAutosaveEnabled,
   };
 }
