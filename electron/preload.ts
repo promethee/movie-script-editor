@@ -12,6 +12,11 @@ contextBridge.exposeInMainWorld('api', {
   onMenuNew: (cb: () => void) => ipcRenderer.on('menu:new', cb),
   checkUnsavedAndNew: (isDirty: boolean) =>
     ipcRenderer.invoke('file:checkUnsavedAndNew', isDirty),
+  exportPdf: (args: {
+    titlePageHtml: string;
+    scriptHtml: string;
+    suggestedName: string;
+  }) => ipcRenderer.invoke('file:exportPdf', args),
   removeMenuListeners: () => {
     ipcRenderer.removeAllListeners('menu:open');
     ipcRenderer.removeAllListeners('menu:save');

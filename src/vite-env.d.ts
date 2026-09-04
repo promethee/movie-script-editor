@@ -13,6 +13,11 @@ interface Window {
 
     onMenuNew: (cb: () => void) => void;
     checkUnsavedAndNew: (isDirty: boolean) => Promise<boolean>;
+    exportPdf: (args: {
+      titlePageHtml: string;
+      scriptHtml: string;
+      suggestedName: string;
+    }) => Promise<string | null>;
     removeMenuListeners: () => void;
   };
 }

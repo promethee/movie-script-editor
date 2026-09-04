@@ -143,3 +143,57 @@ ipcMain.handle('file:readPath', async (_e, filePath: string) => {
     return null; // file moved/deleted/inaccessible
   }
 });
+
+ipcMain.handle(
+  'file:exportPdf',
+  async (
+    _e,
+    {
+      titlePageHtml,
+      scriptHtml,
+      suggestedName,
+    }: {
+      titlePageHtml: string;
+      scriptHtml: string;
+      suggestedName: string;
+    },
+  ) => {
+    const result = await dialog.showSaveDialog(mainWindow!, {
+      defaultPath: `${suggestedName}.pdf`,
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
+    });
+    if (result.canceled || !result.filePath) return null;
+
+    const fullHtml = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+  @page { size: letter; margin: 0; }
+  body { font-family: 'Courier Prime', 'Courier New', monospace; font-size: 12pt; color: #000;
+         margin: 1in 1in 1in 1.5in; }
+  h3 { text-transform: uppercase; font-weight: bold; margin: 1.5em 0 0.5em; }
+  h2 { text-align: right; text-transform: uppercase; font-weight: bold; margin: 1.5em 0 0.5em; }
+  p { margin: 0 0 1em; }
+  p.centered { text-align: center; }
+  .dialogue { width: 60%; margin: 0 auto 1em; }
+  .dialogue h4 { text-align: center; text-transform: uppercase; margin: 0 0 0.2em; font-weight: bold; }
+  .dialogue p.parenthetical { text-align: center; font-style: italic; width: 70%; margin: 0 auto 0.2em; }
+  .title-page { height: 9in; display: flex; flex-direction: column; justify-content: center; align-items: center;
+                text-align: center; page-break-after: always; }
+</style></head><body>
+  <div class="title-page">${titlePageHtml}</div>
+  ${scriptHtml}
+</body></html>`;
+
+    const pdfWindow = new BrowserWindow({ show: false });
+    await pdfWindow.loadURL(
+      'data:text/html;charset=utf-8,' + encodeURIComponent(fullHtml),
+    );
+    const pdfBuffer = await pdfWindow.webContents.printToPDF({
+      printBackground: true,
+      pageSize: 'Letter',
+    });
+    await fs.writeFile(result.filePath, pdfBuffer);
+    pdfWindow.close();
+
+    return result.filePath;
+  },
+);

@@ -8,6 +8,7 @@ import { useFountainFile } from './hooks/useFountainFile';
 import { useSettings } from './hooks/useSettings';
 import { FontSizeControl } from './components/FontSizeControl';
 import { AppMenu } from './components/AppMenu';
+import { parseFountain } from './fountain/parse';
 
 type ViewMode = 'write' | 'preview' | 'split';
 
@@ -58,6 +59,23 @@ export default function App() {
     }
   }, [isDirty, resetDocument, setLastFilePath, setDraft]);
 
+  const exportPdf = useCallback(async () => {
+    const { html, titlePageHtml, title } = parseFountain(content);
+    const suggestedName = (
+      title ||
+      filePath
+        ?.split(/[\\/]/)
+        .pop()
+        ?.replace(/\.fountain$/, '') ||
+      'Untitled'
+    ).replace(/[\\/:*?"<>|]/g, ''); // strip characters invalid in filenames
+    await window.api.exportPdf({
+      titlePageHtml,
+      scriptHtml: html,
+      suggestedName,
+    });
+  }, [content, filePath]);
+
   const menuGroups = [
     {
       label: 'File',
@@ -82,6 +100,7 @@ export default function App() {
         { label: 'Open...', onClick: openFile, shortcut: 'Ctrl+O' },
         { label: 'Save', onClick: saveFile, shortcut: 'Ctrl+S' },
         { label: 'Save As...', onClick: saveFileAs, shortcut: 'Ctrl+Shift+S' },
+        { label: 'Export to PDF...', onClick: exportPdf },
       ],
     },
   ];
