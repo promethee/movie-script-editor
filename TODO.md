@@ -54,7 +54,7 @@
 - [x] Export to PDF (title page from Fountain metadata, suggested filename from script title, standard screenplay margins/formatting)
 - [x] Autosave — opt-in checkbox in toolbar (next to File menu), disabled until file is saved once, debounced 2.5s writes, resets off on New/Open, "Autosave!" flash confirmation on each write
 - [ ] Scene navigator sidebar (optional, toggle-only — must not break distraction-free default)
-- [ ] Keyboard shortcuts cheat sheet
+- [x] Keyboard shortcuts cheat sheet — descoped: shortcuts are standard conventions or already surfaced in the UI (e.g. Ctrl+Tab hint next to view toggle)
 
 ## 7. Testing
 
