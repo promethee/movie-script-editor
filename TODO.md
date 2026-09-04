@@ -28,7 +28,7 @@
 - [x] Native menu (File > New/Open/Save/Save As) + keyboard shortcuts, listeners cleaned up correctly
 - [x] Restore last opened file on launch (via remembered path + IPC re-read)
 - [x] Restore unsaved draft content on launch (persisted separately from saved-file path, cleared once saved)
-- [ ] Confirm before quit if there are unsaved changes (native dialog, same guard pattern as New file)
+- [x] Confirm before quit if there are unsaved changes (native dialog, intercepts window close)
 - [ ] Handle file already-open-elsewhere / external changes
 
 ## 4. Distraction-Free Chrome
@@ -53,10 +53,9 @@
 ## 6. Polish / Post-MVP (backlog, not blocking)
 
 - [x] Export to PDF (title page from Fountain metadata, suggested filename from script title, standard screenplay margins/formatting)
-- [x] Autosave — opt-in checkbox in toolbar (next to File menu), disabled until file is saved once, debounced 2.5s writes, resets off on New/Open, "Autosave!" flash confirmation on each write
+- [x] Autosave — opt-in checkbox in toolbar, disabled until file is saved once, debounced 2.5s writes, resets off on New/Open, "Autosave!" flash confirmation
+- [x] Screenplay stats — word count, scene count, estimated pages/runtime, shown in a dedicated row below the toolbar (55-lines-per-page heuristic, debounced)
 - [ ] Scene navigator sidebar (optional, toggle-only — must not break distraction-free default)
-- [ ] Screenplay stats (page count, scene count, word count, estimated runtime)
-- [x] Keyboard shortcuts cheat sheet — descoped: shortcuts are standard conventions or already surfaced in the UI (e.g. Ctrl+Tab hint next to view toggle)
 
 ## 7. Testing
 

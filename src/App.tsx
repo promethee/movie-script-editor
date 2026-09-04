@@ -9,6 +9,8 @@ import { useSettings } from './hooks/useSettings';
 import { FontSizeControl } from './components/FontSizeControl';
 import { AppMenu } from './components/AppMenu';
 import { parseFountain } from './fountain/parse';
+import { computeStats, type ScriptStats } from './fountain/stats';
+import { StatsBar } from './components/StatsBar';
 
 type ViewMode = 'write' | 'preview' | 'split';
 
@@ -47,6 +49,13 @@ export default function App() {
   const [mode, setModeState] = useState<ViewMode>(lastView);
 
   const [justAutosaved, setJustAutosaved] = useState(false);
+
+  const [stats, setStats] = useState<ScriptStats>({
+    wordCount: 0,
+    sceneCount: 0,
+    estimatedPages: 0,
+    estimatedMinutes: 0,
+  });
 
   // --- derived actions ---
   const setMode = (m: ViewMode) => {
@@ -222,6 +231,11 @@ export default function App() {
     return () => window.api.removeBeforeQuitListener();
   }, [isDirty]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => setStats(computeStats(content)), 300);
+    return () => clearTimeout(timeout);
+  }, [content]);
+
   // --- render ---
   return (
     <div className="h-screen w-screen flex flex-col bg-chrome">
@@ -265,6 +279,11 @@ export default function App() {
           />
         </div>
       </div>
+
+      <div className="flex justify-center px-3 py-1 border-t border-black/20">
+        <StatsBar stats={stats} />
+      </div>
+
       <div className="flex-1 flex overflow-hidden">
         {(mode === 'write' || mode === 'split') && (
           <div className={mode === 'split' ? 'w-1/2 h-full' : 'w-full h-full'}>
