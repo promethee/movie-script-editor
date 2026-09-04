@@ -38,7 +38,7 @@ Downloaded builds are **unsigned** (no Apple Developer or Windows code-signing c
 This is expected and safe for a project you're building from open source.
 
 ```bash
-git clone https://github.com/<your-username>/movie-script-editor.git
+git clone https://github.com/promethee/movie-script-editor.git
 cd movie-script-editor
 npm install
 npm run dev
