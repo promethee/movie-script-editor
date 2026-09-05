@@ -64,10 +64,10 @@
 ## 7. Testing
 
 - [x] Vitest + Testing Library setup (jsdom environment)
-- [x] Unit tests: parseFountain (title extraction, scene heading/transition HTML, empty input)
+- [x] Unit tests: parseFountain (title extraction, scene heading/transition HTML, empty input, title-page separation)
 - [x] Unit tests: useDocument (dirty state, markSaved, resetDocument)
 - [x] Unit tests: useSettings (defaults, persistence, fontSize clamping)
-- [ ] Unit tests: useFountainFile (mock window.api, verify open/save/saveAs calls)
+- [x] Unit tests: useFountainFile (mocked window.api — open/save/saveAs, cancelled dialogs, ref-based stale-closure guard)
 - [x] E2E setup (Playwright + Electron, isolated user-data-dir per test)
 - [x] E2E: blank editor on launch, draft persistence across restart, preview rendering, theme persistence
-- [ ] E2E: native menu actions (New/Open/Save/Save As) — needs IPC-driven trigger since Playwright can't click OS-native menus
+- [x] Native-menu e2e tests — descoped: Playwright can't drive real OS menu clicks; would only test the IPC handler, not the actual click path (documented in README's Test Coverage section)
