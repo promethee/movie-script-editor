@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
@@ -31,19 +34,22 @@ jobs:
       - name: Package
         run: npm run package -- --publish=never
         env:
-          # Skip code signing — unsigned builds for a portfolio project.
-          # Users will see an "unidentified developer" warning on first launch.
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.os }}
-          path: release/**/*.{exe,dmg,AppImage}
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.AppImage
 
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/download-artifact@v4
         with:
