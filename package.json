@@ -30,9 +30,9 @@
       "target": "AppImage",
       "icon": "build/icons/png/1024x1024.png",
       "category": "Office",
-      "desktopName": "movie-script-editor.desktop",
-      "syncDesktopName": true
-    }
+      "desktopName": "movie-script-editor.desktop"
+    },
+    "syncDesktopName": true
   },
   "scripts": {
     "lint": "oxlint",
