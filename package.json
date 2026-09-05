@@ -2,6 +2,8 @@
   "name": "movie-script-editor",
   "private": true,
   "version": "1.0.0",
+  "description": "A distraction-free desktop screenwriting editor built around the Fountain format.",
+  "author": "François Chateau",
   "type": "module",
   "main": "dist-electron/main.cjs",
   "build": {
@@ -27,7 +29,9 @@
     "linux": {
       "target": "AppImage",
       "icon": "build/icons/png/1024x1024.png",
-      "category": "Office"
+      "category": "Office",
+      "desktopName": "movie-script-editor.desktop",
+      "syncDesktopName": true
     }
   },
   "scripts": {

@@ -29,7 +29,7 @@ jobs:
         run: npm run build
 
       - name: Package
-        run: npm run package
+        run: npm run package -- --publish=never
         env:
           # Skip code signing — unsigned builds for a portfolio project.
           # Users will see an "unidentified developer" warning on first launch.
