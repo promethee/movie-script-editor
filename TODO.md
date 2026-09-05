@@ -50,7 +50,7 @@
 - [x] macOS (dmg) and Linux (AppImage) packaging targets added (untested on those OSes — built via CI, not manually verified)
 - [x] GitHub Actions release pipeline (tag-triggered, builds Win/macOS/Linux, runs unit tests, publishes installers to GitHub Releases)
 - [x] Basic README with install instructions, unsigned-build notice, and test coverage transparency section
-- [x] App icon + branding — descoped: shipping with Electron's default icon
+- [x] App icon + branding — custom icon generated (SVG → PNG → electron-icon-maker) and wired into win/mac/linux build config
 - [x] GitHub Pages landing site (docs/index.html + style.css) — hero, screenshot, feature grid, AI-dev-project note, titmouse photo aside (reframed as editorial nod to the "MoSE" nickname, not a branded mascot, per Pexels license review)
 
 ## 6. Polish / Post-MVP (backlog, not blocking)
