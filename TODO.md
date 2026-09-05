@@ -45,13 +45,14 @@
 
 ## 5. Packaging & Onboarding
 
-- [x] electron-builder config (output separated to release/, main/preload compiled as .cjs to avoid ESM/CJS conflicts)
+- [x] electron-builder config (win/mac/linux, output separated to release/)
 - [x] Windows installer builds and launches successfully
-- [x] macOS (dmg) and Linux (AppImage) packaging targets added (untested on those OSes — built via CI, not manually verified)
-- [x] GitHub Actions release pipeline (tag-triggered, builds Win/macOS/Linux, runs unit tests, publishes installers to GitHub Releases)
-- [x] Basic README with install instructions, unsigned-build notice, and test coverage transparency section
-- [x] App icon + branding — custom icon generated (SVG → PNG → electron-icon-maker) and wired into win/mac/linux build config
-- [x] GitHub Pages landing site (docs/index.html + style.css) — hero, screenshot, feature grid, AI-dev-project note, titmouse photo aside (reframed as editorial nod to the "MoSE" nickname, not a branded mascot, per Pexels license review)
+- [x] macOS (dmg) and Linux (AppImage) packaging targets — built successfully via CI (untested on those OSes directly)
+- [x] GitHub Actions release pipeline — fully working end-to-end after fixing: Node version (jsdom compat), missing cpy/copyfiles dependency, electron-builder schema changes (syncDesktopName/desktopName not in v26), GITHUB_TOKEN permissions (403), artifact glob brace-expansion
+- [x] App icon + branding (custom SVG → PNG → .ico/.icns/.png via electron-icon-maker)
+- [x] README with install instructions, unsigned-build notice, test coverage transparency
+- [x] GitHub Pages landing site
+- [x] v1.0.0 tagged and released — Windows build verified working
 
 ## 6. Polish / Post-MVP (backlog, not blocking)
 
