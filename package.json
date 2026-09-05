@@ -39,7 +39,7 @@
     "build:vite": "vite build",
     "build:electron": "tsc -p electron/tsconfig.json && node -e \"require('fs').renameSync('dist-electron/main.js','dist-electron/main.cjs'); require('fs').renameSync('dist-electron/preload.js','dist-electron/preload.cjs')\"",
     "build": "npm run build:vite && npm run build:electron",
-    "postbuild:electron": "cpy electron/package.json dist-electron/ || copyfiles -f electron/package.json dist-electron",
+    "postbuild:electron": "node -e \"require('fs').copyFileSync('electron/package.json','dist-electron/package.json')\"",
     "package": "npm run build && electron-builder",
     "test": "vitest",
     "test:e2e": "playwright test"
