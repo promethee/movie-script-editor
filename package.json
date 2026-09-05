@@ -28,9 +28,8 @@
     },
     "linux": {
       "target": "AppImage",
-      "icon": "build/icons/png/1024x1024.png",
       "category": "Office",
-      "desktopName": "movie-script-editor.desktop"
+      "icon": "build/icons/png/1024x1024.png"
     }
   },
   "scripts": {
