@@ -1,4 +1,4 @@
-# Movie Script Editor
+# MoSE, The Movie Script Editor
 
 > 🤖 **AI Dev Project** — This application was built through an agentic, AI-assisted development workflow using **Claude (Sonnet 5)** by Anthropic. I directed the architecture, feature scoping, debugging, and review; Claude wrote the implementation. See [Development Notes](#development-notes) below for details on the process.
 
